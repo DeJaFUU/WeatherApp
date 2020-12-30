@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.today { 
+  grid-area: 2 / 2 / 4 / 3; 
+  border: 2px solid black;
+  background-size: cover;
+  color: white;
+}
+.tom { 
+  grid-area: 2 / 3 / 3 / 4;
+  border: 2px solid black;
+  background-image: url('./images/Rain.jpg');
+  background-size: cover;
+  color: white;
+ }
+.DaT { 
+  grid-area: 3 / 3 / 4 / 4; 
+  border: 2px solid black;
+  background-image: url('./images/Drizzle.jpg');
+  background-size: cover;
+  color: white;
+}
+.week { 
+  grid-area: 2 / 4 / 6 / 5; 
+  border: 2px solid black;
+  background-image: url('./images/weekly.jpg');
+  background-size: cover;
+  color: white;
+}
+.share { 
+  grid-area: 4 / 2 / 6 / 4; 
+  border: 2px solid black;
+}
+  
