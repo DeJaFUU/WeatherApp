@@ -7,6 +7,14 @@ function fetchWeather(lat = 52.7138816, lon = 5.8621951999999995, key){
     .then((res) => res.json())
  }
 
+ function importAll(r) {
+  let images = {};
+  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+
+const images = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
+
 function App() {
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
@@ -52,43 +60,50 @@ function App() {
     )
   }
 
+  console.log(weather.daily);
 
   return (
     !weather ? <p>Loading</p> :
     <div className="App">
-       <div style={{backgroundImage: `url(./images/${weather.current.weather[0].main}.jpg)`}} className="today">
+      <div className="today">
          <ul>
+           <h1>Today</h1>
            <li>{weather.current.weather[0].description}</li>
-           <li>{weather.current.temp}°C</li>
-           <li>Feels like : {weather.current.feels_like}°C</li>
+           <li>{Math.round(weather.current.temp)}°C</li>
+           <li>Feels like : {Math.round(weather.current.feels_like)}°C</li>
         </ul>
       </div>
       <div className="tom">
         <ul>
+           <h1>Tomorrow</h1>
            <li>{weather.daily[0].weather[0].description}</li>
-           <li>{weather.daily[0].temp.day}°C</li>
-           <li>Feels like : {weather.daily[0].feels_like.day}°C</li>
+           <li>{Math.round(weather.daily[0].temp.day)}°C</li>
+           <li>Feels like : {Math.round(weather.daily[0].feels_like.day)}°C</li>
         </ul>
       </div>
       <div className="DaT">
-      <ul>
+        <ul>
+           <h1>Day after Tomorrow</h1>
            <li>{weather.daily[1].weather[0].description}</li>
-           <li>{weather.daily[1].temp.day}°C</li>
-           <li>Feels like : {weather.daily[1].feels_like.day}°C</li>
+           <li>{Math.round(weather.daily[1].temp.day)}°C</li>
+           <li>Feels like : {Math.round(weather.daily[1].feels_like.day)}°C</li>
         </ul>
       </div>
       <div className="week">
-        <ul>
-           <li>Today {weather.current.temp}°C</li>
-           <li>Tomorrow: {weather.daily[0].temp.min}°C - {weather.daily[0].temp.max}°C</li>
-           <li>Tuesday: {weather.daily[1].temp.min}°C - {weather.daily[1].temp.max}°C</li>
-           <li>Wednesday: {weather.daily[2].temp.min}°C - {weather.daily[2].temp.max}°C</li>
-           <li>Thursday: {weather.daily[3].temp.min}°C - {weather.daily[3].temp.max}°C</li>
-           <li>Friday: {weather.daily[4].temp.min}°C - {weather.daily[4].temp.max}°C</li>
-           <li>Saturday: {weather.daily[5].temp.min}°C - {weather.daily[5].temp.max}°C</li>
+        <ul>  
+          <h1>This week!</h1>
+           <li>{new Date(weather.daily[0].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[0].temp.min)}°C and {Math.round(weather.daily[0].temp.max)}°C</li>
+           <li>{new Date(weather.daily[1].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[1].temp.min)}°C and  {Math.round(weather.daily[1].temp.max)}°C</li>
+           <li>{new Date(weather.daily[2].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[2].temp.min)}°C and  {Math.round(weather.daily[2].temp.max)}°C</li>
+           <li>{new Date(weather.daily[3].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[3].temp.min)}°C and  {Math.round(weather.daily[3].temp.max)}°C</li>
+           <li>{new Date(weather.daily[4].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[4].temp.min)}°C and  {Math.round(weather.daily[4].temp.max)}°C</li>
+           <li>{new Date(weather.daily[5].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[5].temp.min)}°C and  {Math.round(weather.daily[5].temp.max)}°C</li>
+           <li>{new Date(weather.daily[6].dt *1000).toLocaleString("en-US", {weekday: "long"})}: Between {Math.round(weather.daily[5].temp.min)}°C and  {Math.round(weather.daily[6].temp.max)}°C</li>
         </ul>
       </div>
-      <div className="share">Weather at {weather.lat}, {weather.lon}</div> 
+      <div className="share">
+        <h1>Weather at {weather.lat}, {weather.lon}</h1>
+        </div> 
     </div>
   );
 }
