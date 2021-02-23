@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# Dynamic weather app.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is it?
 
-## Available Scripts
+A weather app that fetches your local weather based on your location from the OpenWeatherAPI and then renders pictures and weather dynamically based on your weather conditions. 
 
-In the project directory, you can run:
+There is a link on the right hand side with the completed project.
 
-### `npm start`
+## How does it work?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+When you open the site it will prompt you to ask your location. Or if you do not want to share your location, it will default to a preset. The following happens:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. It will use the OpenWeatherAPI link and `fetch()` a JSON file with weather data from the used coordinates.
+2. The JSON weather file will be stored in the `weather` state variable.
+3. The app checks if weather exist, and if it does not return an error.
+4. If succesfull, the function will fetch images based on the weather type, and use those as background for the div. And return this with the weather data.
+5. `new Date()` is called to fetch the days for the weekly weather overview.
 
-### `npm test`
+## How do I use it when cloning?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For preview purposes I have added a key in the state, this is bad practice. If you want to use your own you should get a key from OpenWeatherAPI, and add this to a `.env` variable that points towards the `.env` variable in the `FetchWeather` function.
 
-### `npm run build`
+Pictures inside the src/images can be switched out, do not forgot to keep the current naming, it is required for dynamical fetching.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## FAQ.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Why is the left-bottom box empty?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+It will be used to display a weather graph when I have a better understanding of D3.js.
 
-### `npm run eject`
+### Why is can't the image names be changed?
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To make the application dynamic, it requires a parameter from the API call to mirror the current weather condition. Those parameters are stored inside the `weather.current.weather[0]` object, and `[weather.daily[day].weather[0]` objects. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For more information about the weather types visit the OpenWeatherAPI docs : https://openweathermap.org/weather-conditions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Those hooks are fancy, where did you learn to use that?
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+TylerMcGinnis his courses, yes a shameless plug!
