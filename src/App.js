@@ -1,30 +1,17 @@
 import React from "react";
 import './App.css';
 
-function fetchWeather(lat = 52.7138816, lon = 5.8621951999999995, key) {
-  const url = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${key}`;
-  return fetch(url)
-    .then((res) => res.json())
-}
-
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-  return images;
-}
-
-const images = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
-
 function App() {
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
   const [weather, setWeather] = React.useState({})
   const [coordinates, setCoordinates] = React.useState({})
   const key = '7a80ce5f8e58755c9eb6b72ee83cd819';
+  const images = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
 
   React.useEffect(
     () => {
-      navigator.geolocation.getCurrentPosition(handleLocation)
+      return navigator.geolocation.getCurrentPosition(handleLocation)
     }, []);
 
   React.useEffect(() => {
@@ -49,6 +36,18 @@ function App() {
     })
   }
 
+  function fetchWeather(lat = 52.7138816, lon = 5.8621951999999995, key) {
+    const url = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${key}`;
+    return fetch(url)
+      .then((res) => res.json())
+  }
+  
+  function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+  }
+
   if (loading) return <p>Loading</p>;
 
   if (error) {
@@ -60,13 +59,12 @@ function App() {
     )
   }
 
-
   function weekInfo(dayNumber){ 
     return( 
       <li className='tab'>
         <b> {new Date(weather.daily[dayNumber].dt * 1000).toLocaleString("en-US", { weekday: "long" })}</b>: 
           <p style={{marginLeft: '.5rem'}}>{Math.round(weather.daily[dayNumber].temp.min)}°C 
-        - {Math.round(weather.daily[dayNumber].temp.max)}°C </p>
+        / {Math.round(weather.daily[dayNumber].temp.max)}°C </p>
       </li>
     )
   }
